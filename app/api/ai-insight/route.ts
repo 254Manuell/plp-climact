@@ -17,22 +17,40 @@ Historical Data: ${JSON.stringify(historicalData?.slice(-10) || [])}
 
 Respond in JSON with fields: summary, trend, recommendations (array).`
 
-  // --- MOCKED OpenAI call for demonstration ---
-  // Replace this with a real OpenAI call in production
-  const mockResponse = {
-    summary: `Air quality in ${location} from ${startDate} to ${endDate} was moderate, with occasional spikes in PM2.5 and NO2 levels.`,
-    trend: "Slight improvement over the selected period.",
-    recommendations: [
-      "Consider using air purifiers indoors during high PM2.5 days.",
-      "Limit outdoor activities when AQI exceeds 100.",
-      "Report any unusual pollution events to the community forum."
-    ]
+  // --- Real OpenAI call ---
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    return NextResponse.json({ error: 'OpenAI API key not set on server.' }, { status: 500 });
   }
-  return NextResponse.json(mockResponse)
 
-  // --- Example for real OpenAI call ---
-  // const response = await fetch("https://api.openai.com/v1/chat/completions", { ... })
-  // const data = await response.json()
-  // const content = data.choices?.[0]?.message?.content
-  // try { return NextResponse.json(JSON.parse(content)) } catch { ... }
-} 
+  try {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: "gpt-3.5-turbo",
+        messages: [
+          { role: "system", content: "You are an air quality and climate action assistant." },
+          { role: "user", content: prompt }
+        ],
+        temperature: 0.7,
+        max_tokens: 512
+      })
+    });
+    const data = await response.json();
+    const content = data.choices?.[0]?.message?.content;
+    // Try to parse the AI's response as JSON
+    try {
+      const parsed = JSON.parse(content);
+      return NextResponse.json(parsed);
+    } catch (e) {
+      // If parsing fails, return the raw content
+      return NextResponse.json({ summary: content, trend: "", recommendations: [] });
+    }
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to fetch AI insight', details: error?.toString() }, { status: 500 });
+  }
+}
