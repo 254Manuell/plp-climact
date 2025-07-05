@@ -9,17 +9,17 @@ export default function LandingPage() {
       {/* Hero Section */}
       <div className="relative flex flex-col items-center justify-center min-h-[70vh] px-4 pt-12 pb-24">
         <Image
-          src="/banner.jpg"
+          src="/banner.jpeg"
           alt="Nairobi traffic and public transport scene"
           fill
           className="object-cover absolute inset-0 w-full h-full opacity-60 z-0 rounded-b-3xl"
           priority
         />
         <div className="relative z-10 flex flex-col items-center space-y-8 max-w-3xl text-center">
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-wider text-white drop-shadow-lg">
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-wider text-black drop-shadow-lg">
             Take Action for a Cleaner Tomorrow
           </h1>
-          <p className="text-xl md:text-2xl text-white font-medium drop-shadow">
+          <p className="text-xl md:text-2xl text-black font-medium drop-shadow">
             Join ClimAct to monitor, analyze, and improve air quality in your community. Together, we can make a difference.
           </p>
           <Button
@@ -40,7 +40,7 @@ export default function LandingPage() {
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 mt-8">
           <div className="flex-1 flex flex-col items-center">
             <Image
-              src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80"
+              src="/Monitor.jpeg"
               alt="Air Quality Monitoring"
               width={300}
               height={200}
@@ -51,7 +51,7 @@ export default function LandingPage() {
           </div>
           <div className="flex-1 flex flex-col items-center">
             <Image
-              src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=400&q=80"
+              src="/Analyze.jpeg"
               alt="Analyze Data"
               width={300}
               height={200}
@@ -62,7 +62,7 @@ export default function LandingPage() {
           </div>
           <div className="flex-1 flex flex-col items-center">
             <Image
-              src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80"
+              src="/Act Together.jpeg"
               alt="Community Action"
               width={300}
               height={200}

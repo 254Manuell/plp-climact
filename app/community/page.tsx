@@ -11,7 +11,7 @@ const featuredDiscussions = [
     id: "1",
     title: "How can we reduce air pollution in Nairobi?",
     author: "Jane Mwangi",
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    avatar: "/images/community/portrait 1.jpeg",
     replies: 24,
     trending: true,
   },
@@ -19,7 +19,7 @@ const featuredDiscussions = [
     id: "2",
     title: "Best indoor plants for clean air?",
     author: "Samuel Kimani",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    avatar: "/images/community/portrait 2.jpeg",
     replies: 12,
     trending: false,
   },
@@ -27,7 +27,7 @@ const featuredDiscussions = [
     id: "3",
     title: "Community air quality monitoring success stories",
     author: "Amina Otieno",
-    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+    avatar: "/images/community/portrait 3.jpeg",
     replies: 18,
     trending: true,
   },
@@ -61,12 +61,28 @@ export default function CommunityPage() {
           {featuredDiscussions.map((disc) => (
             <Card key={disc.id} className="bg-gradient-to-br from-white to-green-50 shadow-xl hover:scale-[1.01] hover:shadow-2xl transition-all duration-200 animate-fade-in">
               <CardHeader className="flex flex-row items-center gap-4 pb-2">
-                <Image src={disc.avatar} alt={disc.author} width={48} height={48} className="rounded-full border-2 border-green-200 shadow" />
+                <Image
+  src={disc.avatar}
+  alt={disc.author}
+  width={48}
+  height={48}
+  className="rounded-full border-2 border-green-200 shadow"
+  onError={(e) => {
+    const target = e.target as HTMLImageElement;
+    if (target.src !== '/images/community/default-avatar.png') {
+      target.src = '/images/community/default-avatar.png';
+    }
+  }}
+/>
                 <div>
                   <div className="font-semibold text-lg text-green-800">{disc.author}</div>
                   <div className="text-xs text-gray-500">Started a discussion</div>
                 </div>
-                {disc.trending && <TrendingUp className="w-5 h-5 text-orange-500 ml-auto animate-pulse" title="Trending" />}
+                {disc.trending && (
+  <span aria-label="Trending">
+    <TrendingUp className="w-5 h-5 text-orange-500 ml-auto animate-pulse" />
+  </span>
+)}
               </CardHeader>
               <CardContent>
                 <h3 className="font-bold text-xl mb-2 text-gray-800 hover:text-green-700 transition-colors duration-200">
