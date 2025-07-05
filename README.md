@@ -18,6 +18,22 @@ ClimAct is a cutting-edge, real-time climate management dashboard designed to em
 - **API Integration:** Clean, RESTful API endpoints for frontend-backend communication. 🔗
 - **Beautiful UI:** Custom images and a unique Montserrat font for a fresh, professional look. 🎨
 
+## Real-Time Chatbot Integration 🤖
+
+ClimAct features an integrated, real-time AI-powered chatbot that allows users to ask climate-related questions, receive instant insights, and interact with the dashboard in natural language. The chatbot leverages the backend Flask server for dynamic, context-aware responses and is designed to:
+
+- Provide real-time answers to climate and air quality queries.
+- Guide users through dashboard features and analytics.
+- Support interactive troubleshooting and educational queries.
+
+**How it works:**
+- The chatbot UI is accessible directly from the dashboard.
+- Messages are sent via WebSockets or REST API to the Flask backend, which processes queries using advanced AI models.
+- Responses are streamed back in real time for a seamless conversational experience.
+
+---
+
+
 ---
 
 ## Features 🖼️
