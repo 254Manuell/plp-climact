@@ -17,18 +17,26 @@ const TileLayer = dynamic(() => import("react-leaflet").then(mod => mod.TileLaye
 const Marker = dynamic(() => import("react-leaflet").then(mod => mod.Marker), { ssr: false })
 const Popup = dynamic(() => import("react-leaflet").then(mod => mod.Popup), { ssr: false })
 
-// Custom icon for real-time marker
-const liveIcon = new L.Icon({
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  iconSize: [30, 48],
-  iconAnchor: [15, 48],
-  popupAnchor: [0, -48],
-  className: "live-marker-icon"
-})
 
 export default function DashboardPage() {
   const { isConnected, connectionStatus, currentData, locations, historicalData } = useRealtimeData()
   const [currentTime, setCurrentTime] = useState(new Date())
+  const [liveIcon, setLiveIcon] = useState<L.Icon | null>(null);
+
+  useEffect(() => {
+    const icon = new L.Icon({
+      iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+      iconSize: [30, 48],
+      iconAnchor: [15, 48],
+      popupAnchor: [0, -48],
+      className: "live-marker-icon"
+    });
+    setLiveIcon(icon);
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -303,7 +311,7 @@ export default function DashboardPage() {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   />
                   {/* Real-time pollution marker (currentData) */}
-                  {currentData && (
+                  {currentData && liveIcon && (
                     <Marker position={[-1.2921, 36.8219]} icon={liveIcon}>
                       <Tooltip direction="top" offset={[0, -10]} opacity={1} permanent={false}>
                         <div>
