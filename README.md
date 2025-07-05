@@ -20,11 +20,17 @@ ClimAct is a cutting-edge, real-time climate management dashboard designed to em
 
 ---
 
-## Screenshots 🖼️
+## Features 🖼️
+
+## Real time monitoring
 
 ![Dashboard](public/Monitor.jpeg)
 
+## Real time analytics
+
 ![Real-time Analytics](public/Analyze.jpeg)
+
+## Community involvement
 
 ![Community Collaboration](public/Act%20Together.jpeg)
 
