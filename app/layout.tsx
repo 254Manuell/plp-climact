@@ -13,12 +13,13 @@ import { useState } from "react"
 const inter = Inter({ subsets: ["latin"] })
 
 const menuItems = [
-  { href: "/", label: "Home", icon: "🏠" },
-  { href: "/dashboard", label: "Dashboard", icon: "📊" },
-  { href: "/analytics", label: "Analytics", icon: "📈" },
-  { href: "/blog", label: "Blog", icon: "📰" },
-  { href: "/community", label: "Community", icon: "🤝" },
-  { href: "/login", label: "Login/Signup", icon: "🔑" },
+  { href: "/", label: "Home", icon: "\uD83C\uDFE0" },
+  { href: "/dashboard", label: "Dashboard", icon: "\uD83D\uDCCA" },
+  { href: "/analytics", label: "Analytics", icon: "\uD83D\uDCC8" },
+  { href: "/blog", label: "Blog", icon: "\uD83D\uDCF0" },
+  { href: "/community", label: "Community", icon: "\uD83E\uDD1D" },
+  { href: "/chatbot", label: "Chatbot", icon: "🤖" },
+  { href: "/login", label: "Login/Signup", icon: "\uD83D\uDD11" },
 ]
 
 import { AuthProvider, useAuth } from "@/components/AuthContext";
