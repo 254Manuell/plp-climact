@@ -1,0 +1,6 @@
+/* Canva Sans font import for ClimAct */
+@import url('https://fonts.googleapis.com/css2?family=Canva+Sans:wght@400;700&display=swap');
+
+:root {
+  --font-canva: 'Canva Sans', Arial, Helvetica, sans-serif;
+}
