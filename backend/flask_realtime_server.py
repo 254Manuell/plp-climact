@@ -36,4 +36,11 @@ def handle_connect():
 if __name__ == '__main__':
     # Start the background task using SocketIO's method
     socketio.start_background_task(generate_data)
-    socketio.run(app, host='0.0.0.0', port=3000)
+    socketio.run(app, host='0.0.0.0', port=4000)
+
+@socketio.on('chat_message')
+def handle_chat_message(data):
+    user_message = data.get('message')
+    # TODO: Replace this with real AI logic or dynamic response
+    response = f"You said: {user_message}"
+    socketio.emit('chat_response', {'response': response})

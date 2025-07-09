@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { SocketIOManager } from "@/lib/websocket"
 
 export default function ChatbotPage() {
   const [messages, setMessages] = useState([
@@ -9,34 +10,31 @@ export default function ChatbotPage() {
   const [input, setInput] = useState("")
   const [loading, setLoading] = useState(false)
 
+  const socketRef = useRef<SocketIOManager | null>(null)
+
+  useEffect(() => {
+    // Use your WebSocket URL from env
+    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:3000"
+    const socket = new SocketIOManager(wsUrl)
+    socket.connect()
+    socket.on("chat_response", (data: any) => {
+      setMessages(msgs => [...msgs, { role: "assistant", content: data.response }])
+      setLoading(false)
+    })
+    socketRef.current = socket
+    return () => {
+      socket.disconnect()
+    }
+  }, [])
+
   async function sendMessage(e: React.FormEvent) {
     e.preventDefault()
-    if (!input.trim()) return
+    if (!input.trim() || !socketRef.current) return
     const userMessage = { role: "user", content: input }
     setMessages(msgs => [...msgs, userMessage])
     setLoading(true)
+    socketRef.current.socket?.emit("chat_message", { message: input })
     setInput("")
-    try {
-      const res = await fetch("/api/ai-insight", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user: { name: "User" },
-          location: "Nairobi",
-          stats: {},
-          historicalData: [],
-          startDate: "",
-          endDate: "",
-          message: input
-        })
-      })
-      const data = await res.json()
-      setMessages(msgs => [...msgs, { role: "assistant", content: data.summary || data.trend || JSON.stringify(data) }])
-    } catch (err) {
-      setMessages(msgs => [...msgs, { role: "assistant", content: "Sorry, something went wrong." }])
-    } finally {
-      setLoading(false)
-    }
   }
 
   return (
